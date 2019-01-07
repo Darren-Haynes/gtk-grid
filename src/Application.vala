@@ -31,12 +31,21 @@ public class MyApp : Gtk.Application {
     protected override void activate () {
         var main_window = new Gtk.ApplicationWindow (this);
         var grid = new Gtk.Grid ();
-        grid.add (new Gtk.Label ("Label 1"));
-        grid.add (new Gtk.Label ("Label 2"));
+        grid.orientation = Gtk.Orientation.VERTICAL; 
+        grid.row_spacing = 60;
+        var button = new Gtk.Button.with_label ("Click me!");
+        var label = new Gtk.Label (null);
+        grid.add (button);
+        grid.add (label);
         //  main_window.default_height = 600;
         //  main_window.default_width = 800;
         main_window.title = ("GTK Grid Example");
         main_window.add (grid);
+
+        button.clicked.connect (() => {
+            label.label = "Hello world!";
+            button.sensitive = false;
+        });
         main_window.show_all ();
     }
 
