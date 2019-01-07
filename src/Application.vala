@@ -30,22 +30,50 @@ public class MyApp : Gtk.Application {
 
     protected override void activate () {
         var main_window = new Gtk.ApplicationWindow (this);
-        var grid = new Gtk.Grid ();
-        grid.orientation = Gtk.Orientation.VERTICAL; 
-        grid.row_spacing = 60;
-        var button = new Gtk.Button.with_label ("Click me!");
-        var label = new Gtk.Label (null);
-        grid.add (button);
-        grid.add (label);
+        //  var grid = new Gtk.Grid ();
+        //  grid.orientation = Gtk.Orientation.VERTICAL; 
+        //  grid.row_spacing = 60;
+
+        var layout = new Gtk.Grid ();
+        layout.column_spacing = 10;
+        layout.row_spacing = 10;
+
+        var hello_button = new Gtk.Button.with_label ("Say Hello");
+        var hello_label = new Gtk.Label (null);
+
+        var rotate_button = new Gtk.Button.with_label ("Rotate");
+        var rotate_label = new Gtk.Label ("Horizontal");
+        //  var button = new Gtk.Button.with_label ("Click me!");
+        //  var label = new Gtk.Label (null);
+        //  grid.add (button);
+        //  grid.add (label);
         //  main_window.default_height = 600;
         //  main_window.default_width = 800;
-        main_window.title = ("GTK Grid Example");
-        main_window.add (grid);
 
-        button.clicked.connect (() => {
-            label.label = "Hello world!";
-            button.sensitive = false;
-        });
+        layout.attach (hello_button, 0, 0, 1, 1);
+        layout.attach_next_to (hello_label, hello_button, Gtk.PositionType.RIGHT, 1, 1);
+        layout.attach (rotate_button, 0, 1, 1, 1);
+        layout.attach_next_to (rotate_label, rotate_button, Gtk.PositionType.RIGHT, 1, 1);
+
+        hello_button.clicked.connect (() => {
+        hello_label.label = ("Hello World!");
+        hello_button.sensitive = false;
+    });
+
+        rotate_button.clicked.connect (() => {
+        rotate_label.angle = 90;
+        rotate_label.label = ("Vertical");
+        rotate_button.sensitive = false;
+    });
+
+        main_window.title = ("GTK Grid Example");
+        //  main_window.add (grid);
+        main_window.add (layout);
+
+        //  button.clicked.connect (() => {
+        //      label.label = "Hello world!";
+        //      button.sensitive = false;
+        //  });
         main_window.show_all ();
     }
 
